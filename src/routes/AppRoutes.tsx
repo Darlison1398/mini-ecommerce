@@ -3,6 +3,7 @@ import { PrivateRoute } from "./PrivateRoute";
 import { Login } from "../pages/Login";
 import { Home } from "../pages/Home";
 import { Cart } from "../pages/Cart";
+import { Orders } from "../pages/Orders";
 
 // páginas (vamos criar depois)
 const Admin = () => <h1>Admin</h1>;
@@ -38,6 +39,16 @@ export const AppRoutes = () => {
             </PrivateRoute>
           }
         />
+
+        <Route
+          path="/orders"
+          element={
+            <PrivateRoute role="client">
+              <Orders />
+            </PrivateRoute>
+          }
+        />
+
       </Routes>
   );
 };

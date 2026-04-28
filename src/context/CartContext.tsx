@@ -2,6 +2,7 @@ import { createContext, useContext, useEffect, useState } from "react";
 import type { CartItem } from "../types/Cart";
 import type { Product } from "../types/Product";
 import type { ReactNode } from "react";
+import type { Order } from "../types/Order";
 
 interface CartContextType {
   items: CartItem[];
@@ -10,6 +11,8 @@ interface CartContextType {
   increase: (productId: number) => void;
   decrease: (productId: number) => void;
   total: number;
+  clearCart: () => void;
+  checkout: () => void;
 }
 
 const CartContext = createContext<CartContextType | undefined>(undefined);
@@ -80,9 +83,41 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
             .toFixed(2)
     );
 
+    const clearCart = () => {
+        setItems([]);
+    };
+
+    const checkout = () => {
+        const newOrder: Order = {
+            id: crypto.randomUUID(),
+            items,
+            total,
+            date: new Date().toISOString(),
+        };
+
+        const storedOrders = localStorage.getItem("orders");
+        const orders = storedOrders ? JSON.parse(storedOrders) : [];
+
+        orders.push(newOrder);
+
+        localStorage.setItem("orders", JSON.stringify(orders));
+
+        setItems([]); 
+    };
+
+
+
     return (
         <CartContext.Provider
-        value={{ items, addToCart, removeFromCart, increase, decrease, total }}
+        value={{ 
+            items, 
+            addToCart, 
+            removeFromCart, 
+            increase, decrease,
+            total,
+            clearCart,
+            checkout
+        }}
         >
             {children}
         </CartContext.Provider>

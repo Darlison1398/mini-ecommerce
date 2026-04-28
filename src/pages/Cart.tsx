@@ -1,7 +1,11 @@
 import { useCart } from "../context/CartContext";
+import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 
 export const Cart = () => {
-  const { items, increase, decrease, removeFromCart, total } = useCart();
+  const { items, increase, decrease, removeFromCart, total, clearCart } = useCart();
+  const navigate = useNavigate();
+  const { checkout } = useCart();
 
   if (items.length === 0) {
     return (
@@ -56,7 +60,10 @@ export const Cart = () => {
             </div>
 
             <button
-              onClick={() => removeFromCart(item.product.id)}
+              onClick={() => {
+                removeFromCart(item.product.id);
+                toast.success("Produto removido do carrinho!");
+              }}
               className="text-red-500 hover:text-red-700"
             >
               Remover
@@ -76,7 +83,17 @@ export const Cart = () => {
 
         <button
           className="mt-6 w-full bg-green-600 hover:bg-green-700 text-white py-3 rounded-lg transition"
-          onClick={() => alert("Compra finalizada (mock)")}
+          onClick={() => {
+            checkout();
+
+            toast.success("Compra finalizada com sucesso!");
+
+            //clearCart();
+
+            setTimeout(() => {
+              navigate("/"); // redireciona
+            }, 1500);
+          }}
         >
           Finalizar compra
         </button>

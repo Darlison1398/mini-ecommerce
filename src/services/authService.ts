@@ -11,7 +11,6 @@ export const authService = {
 
     if (!user) return null;
 
-    // salva no localStorage
     localStorage.setItem("user", JSON.stringify(user));
     return user;
   },

@@ -20,7 +20,6 @@ export const userService = {
     const res = await fetch("https://fakestoreapi.com/users");
     const data = await res.json();
 
-    // 👇 adiciona role fake
     const usersWithRole: User[] = data.map((u: any) => ({
       id: u.id,
       username: u.username,

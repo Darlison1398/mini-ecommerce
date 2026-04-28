@@ -2,34 +2,50 @@ import { useEffect, useState } from "react";
 import { productService } from "../services/productService";
 import type { Product } from "../types/Product";
 import toast from "react-hot-toast";
+import { ConfirmModal } from "../components/ConfirmModal";
 
 export const AdminProducts = () => {
-  const [products, setProducts] = useState<Product[]>([]);
-  const [isOpen, setIsOpen] = useState(false);
-  const [isEditOpen, setIsEditOpen] = useState(false);
-  const [editForm, setEditForm] = useState<Product | null>(null);
+    const [products, setProducts] = useState<Product[]>([]);
+    const [isOpen, setIsOpen] = useState(false);
+    const [isEditOpen, setIsEditOpen] = useState(false);
+    const [editForm, setEditForm] = useState<Product | null>(null);
+    const [isConfirmOpen, setIsConfirmOpen] = useState(false);
+    const [selectedId, setSelectedId] = useState<number | null>(null);
 
-  const [form, setForm] = useState({
-    title: "",
-    price: 0,
-    description: "",
-    category: "",
-    image: "",
-   });
+    const [form, setForm] = useState({
+        title: "",
+        price: 0,
+        description: "",
+        category: "",
+        image: "",
+    });
 
-  const loadProducts = async () => {
-    const data = await productService.getAll();
-    setProducts(data);
-  };
+    const loadProducts = async () => {
+        const data = await productService.getAll();
+        setProducts(data);
+    };
 
-  useEffect(() => {
-    loadProducts();
-  }, []);
+    useEffect(() => {
+        loadProducts();
+    }, []);
 
-  const handleDelete = (id: number) => {
-    productService.delete(id);
-    loadProducts();
-  };
+    const handleDelete = (id: number) => {
+        productService.delete(id);
+        loadProducts();
+    };
+
+    const confirmDelete = () => {
+        if (selectedId === null) return;
+
+        productService.delete(selectedId);
+
+        setIsConfirmOpen(false);
+        setSelectedId(null);
+
+        loadProducts();
+    };
+
+
 
     const handleCreate = () => {
         if (!form.title || !form.price) return;
@@ -90,7 +106,10 @@ export const AdminProducts = () => {
               </button>
 
               <button
-                onClick={() => handleDelete(p.id)}
+                onClick={() => {
+                    setSelectedId(p.id)
+                    setIsConfirmOpen(true);
+                }}
                 className="bg-red-500 px-3 py-1 rounded text-white"
               >
                 Deletar
@@ -246,7 +265,13 @@ export const AdminProducts = () => {
             </div>
         )}
 
-
+        <ConfirmModal
+            isOpen={isConfirmOpen}
+            title="Excluir produto"
+            message="Tem certeza que deseja excluir este produto?"
+            onCancel={() => setIsConfirmOpen(false)}
+            onConfirm={confirmDelete}
+        />
     </div>
   );
 };

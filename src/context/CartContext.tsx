@@ -113,8 +113,6 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
         setItems([]); 
     };
 
-
-
     return (
         <CartContext.Provider
         value={{ 
@@ -131,7 +129,6 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
             {children}
         </CartContext.Provider>
     );
-
 }
 
 export const useCart = () => {

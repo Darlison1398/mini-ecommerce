@@ -28,7 +28,6 @@ export const Home = () => {
     }
   };
 
-  // ✅ loading
   if (loading) {
     return (
       <div className="p-6">
@@ -43,7 +42,6 @@ export const Home = () => {
     );
   }
 
-  // ❌ erro
   if (error) {
     return (
       <div className="p-10 text-center text-red-500">
@@ -52,7 +50,6 @@ export const Home = () => {
     );
   }
 
-  // 📭 vazio
   if (products.length === 0) {
     return (
       <div className="p-10 text-center text-gray-500">
@@ -61,7 +58,6 @@ export const Home = () => {
     );
   }
 
-  // 🛒 conteúdo
   return (
     <div className="p-6">
       <h1 className="text-2xl font-bold mb-6">Produtos</h1>

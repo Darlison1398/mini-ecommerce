@@ -3,7 +3,7 @@ import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 
 export const Cart = () => {
-  const { items, increase, decrease, removeFromCart, total, clearCart } = useCart();
+  const { items, increase, decrease, removeFromCart, total } = useCart();
   const navigate = useNavigate();
   const { checkout } = useCart();
 
@@ -72,7 +72,6 @@ export const Cart = () => {
         ))}
       </div>
 
-      {/* TOTAL */}
       <div className="mt-8 bg-white dark:bg-gray-800 p-6 rounded-xl shadow">
         <div className="flex justify-between text-lg font-semibold">
           <span>Total:</span>
@@ -85,13 +84,9 @@ export const Cart = () => {
           className="mt-6 w-full bg-green-600 hover:bg-green-700 text-white py-3 rounded-lg transition"
           onClick={() => {
             checkout();
-
             toast.success("Compra finalizada com sucesso!");
-
-            //clearCart();
-
             setTimeout(() => {
-              navigate("/"); // redireciona
+              navigate("/");
             }, 1500);
           }}
         >

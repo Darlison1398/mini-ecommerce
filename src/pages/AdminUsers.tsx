@@ -2,10 +2,13 @@ import { useEffect, useState } from "react";
 import { userService } from "../services/userService";
 import type { User } from "../types/User";
 import toast from "react-hot-toast";
+import { ConfirmModal } from "../components/ConfirmModal";
 
 export const AdminUsers = () => {
   const [users, setUsers] = useState<User[]>([]);
   const [isOpen, setIsOpen] = useState(false);
+  const [isConfirmOpen, setIsConfirmOpen] = useState(false);
+  const [selectedId, setSelectedId] = useState<number | null>(null);
 
   const [form, setForm] = useState({
     username: "",
@@ -29,11 +32,25 @@ export const AdminUsers = () => {
     loadUsers();
   };
 
-  const handleDelete = (id: number) => {
+  {/*const handleDelete = (id: number) => {
     userService.delete(id);
     toast.success("Usuário removido!");
     loadUsers();
-  };
+  };*/}
+
+    const confirmDelete = () => {
+        console.log("Confirmou delete", selectedId);
+        if (selectedId === null) return;
+
+        userService.delete(selectedId);
+
+        setIsConfirmOpen(false);
+        setSelectedId(null);
+
+        toast.success("Usuário removido!");
+        loadUsers();
+    };
+  
 
   return (
     <div className="p-6">
@@ -58,7 +75,10 @@ export const AdminUsers = () => {
             </div>
 
             <button
-              onClick={() => handleDelete(u.id)}
+              onClick={() => {
+                setSelectedId(u.id);
+                setIsConfirmOpen(true);
+            }}
               className="text-red-500"
             >
               Deletar
@@ -67,7 +87,6 @@ export const AdminUsers = () => {
         ))}
       </div>
 
-      {/* MODAL */}
       {isOpen && (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center">
           <div className="bg-white p-6 rounded w-80">
@@ -111,6 +130,15 @@ export const AdminUsers = () => {
           </div>
         </div>
       )}
+
+        <ConfirmModal
+            isOpen={isConfirmOpen}
+            title="Excluir usuário"
+            message="Tem certeza que deseja excluir este usuário?"
+            onCancel={() => setIsConfirmOpen(false)}
+            onConfirm={confirmDelete}
+        />
+
     </div>
   );
 };

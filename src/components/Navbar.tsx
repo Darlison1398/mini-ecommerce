@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { ShoppingCart, Sun, Moon, LogOut, Package, House } from "lucide-react";
+import { ShoppingCart, Sun, Moon, LogOut, Package, House, Users, SquareChartGantt } from "lucide-react";
 import { useAuth } from "../context/AuthContext";
 import { useCart } from "../context/CartContext";
 import { useTheme } from "../hooks/useTheme";
@@ -41,10 +41,14 @@ export const Navbar = () => {
           </Link>
         )}
 
-
-
         {user?.role === "admin" && (
-          <Link to="/admin/users">Usuários</Link>
+          <Link 
+            to="/admin/users"
+            className="flex items-center gap-1 text-gray-600 dark:text-gray-300 hover:text-blue-600 transition"
+          >
+            <Users size={18}/>
+            <span className="hidden sm:block">Usuários</span>
+          </Link>
         )}
 
         {user?.role === "client" && (
@@ -67,7 +71,13 @@ export const Navbar = () => {
         )}
 
         {user?.role === "admin" && (
-          <Link to="/admin/products">Produtos</Link>
+          <Link 
+            to="/admin/products"
+            className="flex items-center gap-1 text-gray-600 dark:text-gray-300 hover:text-blue-600 transition"
+          >
+            <SquareChartGantt  size={18}/>
+            <span className="hidden sm:block">Produtos</span>
+          </Link>
         )}
 
         <button

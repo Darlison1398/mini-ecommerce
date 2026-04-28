@@ -13,12 +13,15 @@ interface CartContextType {
   total: number;
   clearCart: () => void;
   checkout: () => void;
+  isAnimating: boolean;
 }
 
 const CartContext = createContext<CartContextType | undefined>(undefined);
 
 export const CartProvider = ({ children }: { children: ReactNode }) => {
     const [items, setItems] = useState<CartItem[]>([]);
+    const [isAnimating, setIsAnimating] = useState(false);
+
     useEffect(() => {
         try {
             const stored = localStorage.getItem("cart");
@@ -49,6 +52,11 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
 
             return [...prev, { product, quantity: 1 }];
         });
+
+        setIsAnimating(true);
+        setTimeout(() => {
+            setIsAnimating(false);
+        }, 300);
     };
 
     const removeFromCart = (productId: number) => {
@@ -116,7 +124,8 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
             increase, decrease,
             total,
             clearCart,
-            checkout
+            checkout,
+            isAnimating
         }}
         >
             {children}

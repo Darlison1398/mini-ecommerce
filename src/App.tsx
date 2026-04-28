@@ -8,7 +8,7 @@ function App() {
     <BrowserRouter>
       <Navbar />
       <AppRoutes />
-      <Toaster position="top-right" />
+      <Toaster position="bottom-right" />
     </BrowserRouter>
   )
 }

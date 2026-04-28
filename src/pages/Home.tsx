@@ -61,26 +61,27 @@ export const Home = () => {
   return (
     <div className="p-6">
       <h1 className="text-2xl font-bold mb-6">Produtos</h1>
-
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
         {products.map((product) => (
           <div
             key={product.id}
-            className="bg-white dark:bg-gray-800 rounded-2xl shadow hover:shadow-lg transition p-4"
+            className="bg-white dark:bg-gray-800 rounded-2xl shadow hover:shadow-lg transition p-4 flex flex-col h-full"
           >
-            <img
-              src={product.image}
-              alt={product.title}
-              className="h-40 w-full object-contain mb-4"
-            />
+            <div className="flex-1">
+              <img
+                src={product.image}
+                alt={product.title}
+                className="h-40 w-full object-contain mb-4"
+              />
 
-            <h2 className="text-lg font-semibold text-gray-800 dark:text-white line-clamp-2">
-              {product.title}
-            </h2>
+              <h2 className="text-lg font-semibold text-gray-800 dark:text-white line-clamp-2">
+                {product.title}
+              </h2>
 
-            <p className="text-green-600 font-bold mt-2">
-              R$ {product.price.toFixed(2)}
-            </p>
+              <p className="text-green-600 font-bold mt-2">
+                R$ {product.price.toFixed(2)}
+              </p>
+            </div>
 
             {user?.role === "client" && (
               <button

@@ -48,7 +48,7 @@ export const Cart = () => {
                   -
                 </button>
 
-                <span>{item.quantity}</span>
+                <span className="dark:text-white">{item.quantity}</span>
 
                 <button
                   onClick={() => increase(item.product.id)}
@@ -74,7 +74,7 @@ export const Cart = () => {
 
       <div className="mt-8 bg-white dark:bg-gray-800 p-6 rounded-xl shadow">
         <div className="flex justify-between text-lg font-semibold">
-          <span>Total:</span>
+          <span className="dark:text-white">Total:</span>
           <span className="text-green-600">
             R$ {total.toFixed(2)}
           </span>

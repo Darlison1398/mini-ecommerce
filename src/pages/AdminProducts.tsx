@@ -81,7 +81,7 @@ export const AdminProducts = () => {
 
   return (
     <div className="p-6">
-      <h1 className="text-2xl font-bold mb-6">Admin - Produtos</h1>
+      <h1 className="text-2xl font-bold mb-6">Lista de Produtos</h1>
       <button
         onClick={() => setIsOpen(true)}
         className="mb-4 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg"
@@ -96,7 +96,7 @@ export const AdminProducts = () => {
             className="bg-white dark:bg-gray-800 p-4 rounded shadow flex justify-between items-center"
           >
             <div>
-              <h2 className="font-semibold">{p.title}</h2>
+              <h2 className="font-semibold dark:text-white">{p.title}</h2>
               <p className="text-green-600">R$ {p.price}</p>
             </div>
 

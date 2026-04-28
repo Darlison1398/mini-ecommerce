@@ -5,38 +5,32 @@ import toast from "react-hot-toast";
 import { ConfirmModal } from "../components/ConfirmModal";
 
 export const AdminUsers = () => {
-  const [users, setUsers] = useState<User[]>([]);
-  const [isOpen, setIsOpen] = useState(false);
-  const [isConfirmOpen, setIsConfirmOpen] = useState(false);
-  const [selectedId, setSelectedId] = useState<number | null>(null);
+    const [users, setUsers] = useState<User[]>([]);
+    const [isOpen, setIsOpen] = useState(false);
+    const [isConfirmOpen, setIsConfirmOpen] = useState(false);
+    const [selectedId, setSelectedId] = useState<number | null>(null);
 
-  const [form, setForm] = useState({
-    username: "",
-    password: "",
-    role: "client" as "admin" | "client",
-  });
+    const [form, setForm] = useState({
+        username: "",
+        password: "",
+        role: "client" as "admin" | "client",
+    });
 
-  const loadUsers = async () => {
-    const data = await userService.getAll();
-    setUsers(data);
-  };
+    const loadUsers = async () => {
+        const data = await userService.getAll();
+        setUsers(data);
+    };
 
-  useEffect(() => {
-    loadUsers();
-  }, []);
+    useEffect(() => {
+        loadUsers();
+    }, []);
 
-  const handleCreate = () => {
-    userService.create(form);
-    toast.success("Usuário criado!");
-    setIsOpen(false);
-    loadUsers();
-  };
-
-  {/*const handleDelete = (id: number) => {
-    userService.delete(id);
-    toast.success("Usuário removido!");
-    loadUsers();
-  };*/}
+    const handleCreate = () => {
+        userService.create(form);
+        toast.success("Usuário criado!");
+        setIsOpen(false);
+        loadUsers();
+    };
 
     const confirmDelete = () => {
         console.log("Confirmou delete", selectedId);
@@ -54,7 +48,7 @@ export const AdminUsers = () => {
 
   return (
     <div className="p-6">
-      <h1 className="text-2xl font-bold mb-6">Admin - Usuários</h1>
+      <h1 className="text-2xl font-bold mb-6">Lista de Usuários</h1>
 
       <button
         onClick={() => setIsOpen(true)}
@@ -70,7 +64,7 @@ export const AdminUsers = () => {
             className="bg-white dark:bg-gray-800 p-4 rounded shadow flex justify-between"
           >
             <div>
-              <p className="font-semibold">{u.username}</p>
+              <p className="font-semibold dark:text-white">{u.username}</p>
               <p className="text-sm text-gray-500">{u.role}</p>
             </div>
 

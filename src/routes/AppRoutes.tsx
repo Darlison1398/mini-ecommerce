@@ -1,12 +1,11 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import { PrivateRoute } from "./PrivateRoute";
 import { Login } from "../pages/Login";
 import { Home } from "../pages/Home";
 import { Cart } from "../pages/Cart";
 import { Orders } from "../pages/Orders";
-
-// páginas (vamos criar depois)
-const Admin = () => <h1>Admin</h1>;
+import { AdminProducts } from "../pages/AdminProducts";
+import { AdminUsers } from "../pages/AdminUsers";
 
 export const AppRoutes = () => {
   return (
@@ -23,10 +22,19 @@ export const AppRoutes = () => {
         />
 
         <Route
-          path="/admin"
+          path="/admin/products"
           element={
             <PrivateRoute role="admin">
-              <Admin />
+              <AdminProducts />
+            </PrivateRoute>
+          }
+        />
+
+        <Route
+          path="/admin/users"
+          element={
+            <PrivateRoute role="admin">
+              <AdminUsers />
             </PrivateRoute>
           }
         />

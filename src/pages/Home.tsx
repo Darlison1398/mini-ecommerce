@@ -4,12 +4,14 @@ import type { Product } from "../types/Product";
 import { useCart } from "../context/CartContext";
 import toast from "react-hot-toast";
 import { ProductSkeleton } from "../components/ProductSkeleton";
+import { useAuth } from "../context/AuthContext";
 
 export const Home = () => {
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const { addToCart } = useCart();
+  const { user } = useAuth();
 
   useEffect(() => {
     loadProducts();
@@ -84,15 +86,18 @@ export const Home = () => {
               R$ {product.price.toFixed(2)}
             </p>
 
-            <button
-                onClick={() => {
-                  addToCart(product); 
-                  toast.success("Produto adicionado ao carrinho!");
-                }}
-                className="mt-4 w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-lg transition"
-            >
+            {user?.role === "client" && (
+              <button
+                  onClick={() => {
+                    addToCart(product); 
+                    toast.success("Produto adicionado ao carrinho!");
+                  }}
+                  className="mt-4 w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-lg transition"
+              >
                 Adicionar ao carrinho
-            </button>
+              </button>
+            )}
+
           </div>
         ))}
       </div>

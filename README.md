@@ -1,73 +1,193 @@
-# React + TypeScript + Vite
+# 🛒 Mini E-commerce - Teste Técnico Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Aplicação de e-commerce desenvolvida como parte de um teste técnico, utilizando **React + TypeScript + TailwindCSS + Vite**.
 
-Currently, two official plugins are available:
+O projeto simula um fluxo completo de loja virtual, incluindo autenticação, controle de usuários (admin/client), carrinho de compras e CRUD de produtos e usuários.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+---
 
-## React Compiler
+## 🚀 Tecnologias utilizadas
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+* React
+* TypeScript
+* Vite
+* TailwindCSS
+* React Router
+* Context API
+* LocalStorage (persistência mock)
+* React Hot Toast
+* Lucide Icons
 
-## Expanding the ESLint configuration
+---
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## 📦 Funcionalidades
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+### 🔐 Autenticação e Autorização
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+* Login com usuários simulados
+* Controle de acesso baseado em **roles**:
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+  * `admin`
+  * `client`
+* Proteção de rotas com PrivateRoute
+
+---
+
+### 👤 Usuário Cliente
+
+* Visualizar produtos
+* Adicionar ao carrinho
+* Alterar quantidade
+* Remover itens
+* Visualizar total da compra
+* Finalizar compra (mock)
+* Histórico de pedidos
+* Tema claro/escuro
+
+---
+
+### 🛠️ Usuário Admin
+
+* Login administrativo
+* CRUD de produtos:
+
+  * Criar
+  * Listar
+  * Editar
+  * Deletar
+* CRUD de usuários:
+
+  * Criar
+  * Listar
+  * Deletar
+
+---
+
+## ⚠️ Observação importante
+
+A aplicação utiliza a API pública:
+
+👉 https://fakestoreapi.com/
+
+Porém, como ela é **read-only**, as operações de escrita (CRUD) são simuladas utilizando:
+
+✔️ `localStorage`
+
+Ou seja:
+
+* A API é usada apenas para carregar os dados iniciais
+* Todas as alterações são persistidas localmente no navegador
+
+---
+
+## 🔑 Contas de acesso
+
+### 👨‍💼 Admin
+
+```
+username: mor_2314
+password: 83r5^_
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+### 👤 Cliente
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
 ```
+username: kevinryan
+password: kev02937@
+```
+
+---
+
+## 🧠 Arquitetura do Projeto
+
+```
+src/
+ ├── components/
+ ├── pages/
+ ├── services/
+ ├── context/
+ ├── hooks/
+ ├── types/
+ ├── routes/
+```
+
+### 📌 Destaques:
+
+* Separação clara de responsabilidades
+* Services para consumo de API
+* Context API para estado global (Auth e Cart)
+* Tipagem forte com TypeScript
+* Organização escalável
+
+---
+
+## 🎨 UI/UX
+
+* Layout responsivo (mobile, tablet, desktop)
+* Dark Mode 🌙
+* Feedback visual:
+
+  * Loading skeleton
+  * Toasts
+  * Hover/animations
+* Acessibilidade básica
+
+---
+
+## ⚙️ Como rodar o projeto
+
+```bash
+# Clonar repositório
+git clone <URL_DO_REPO>
+
+# Entrar na pasta
+cd nome-do-projeto
+
+# Instalar dependências
+npm install
+
+# Rodar projeto
+npm run dev
+```
+
+A aplicação estará disponível em:
+👉 http://localhost:5173
+
+---
+
+## 💡 Diferenciais implementados
+
+* Persistência com localStorage simulando backend
+* Controle de roles (admin/client)
+* Dark mode funcional
+* Feedback visual moderno
+* Animações (ex: carrinho)
+* Estrutura escalável
+* Código limpo e organizado
+
+---
+
+## 📌 Possíveis melhorias futuras
+
+* Integração com backend real
+* Testes automatizados (Vitest)
+* Uso de Zustand ou Redux
+* Paginação de produtos
+* Upload de imagens
+* Dashboard admin mais completo
+
+---
+
+## 📄 Licença
+
+Projeto desenvolvido apenas para fins de avaliação técnica.
+
+---
+
+## 👨‍💻 Autor
+
+Darlison de Souza Silva
+Desenvolvedor Full Stack
+LinkedIn: https://www.linkedin.com/in/darlison-silva-86113a191
+
+---

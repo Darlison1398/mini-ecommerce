@@ -30,13 +30,22 @@ export const Navbar = () => {
           <House size={18}/>
           <span className="hidden sm:block">Home</span>
         </Link>
-        <Link
-          to="/orders"
-          className="flex items-center gap-1 text-gray-600 dark:text-gray-300 hover:text-blue-600 transition"
-        >
-          <Package size={18} />
-          <span className="hidden sm:block">Pedidos</span>
-        </Link>
+
+        {user?.role === "client" && (
+          <Link
+            to="/orders"
+            className="flex items-center gap-1 text-gray-600 dark:text-gray-300 hover:text-blue-600 transition"
+          >
+            <Package size={18} />
+            <span className="hidden sm:block">Pedidos</span>
+          </Link>
+        )}
+
+
+
+        {user?.role === "admin" && (
+          <Link to="/admin/users">Usuários</Link>
+        )}
 
         {user?.role === "client" && (
           <Link
@@ -58,12 +67,7 @@ export const Navbar = () => {
         )}
 
         {user?.role === "admin" && (
-          <Link
-            to="/admin"
-            className="text-gray-600 dark:text-gray-300 hover:text-blue-600 transition"
-          >
-            Admin
-          </Link>
+          <Link to="/admin/products">Produtos</Link>
         )}
 
         <button

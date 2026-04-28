@@ -1,49 +1,61 @@
-import { api } from "./api";
 import type { Product } from "../types/Product";
+
+const STORAGE_KEY = "products";
+
+const getLocalProducts = (): Product[] => {
+  const data = localStorage.getItem(STORAGE_KEY);
+  return data ? JSON.parse(data) : [];
+};
+
+const saveLocalProducts = (products: Product[]) => {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(products));
+};
 
 export const productService = {
   async getAll(): Promise<Product[]> {
-    const response = await api.get<Product[]>("/products");
-    return response.data;
+    const local = getLocalProducts();
+
+    if (local.length > 0) return local;
+
+    const res = await fetch("https://fakestoreapi.com/products");
+    const data = await res.json();
+
+    saveLocalProducts(data);
+
+    return data;
   },
 
-  async getById(id: number): Promise<Product> {
-    const response = await api.get<Product>(`/products/${id}`);
-    return response.data;
-  },
+  create(product: Omit<Product, "id">): Product {
+    const products = getLocalProducts();
 
-  // MOCK (não salva na API)
-  async create(product: Product): Promise<Product> {
-    const products = JSON.parse(localStorage.getItem("products") || "[]");
-
-    const newProduct = {
+    const newProduct: Product = {
       ...product,
       id: Date.now(),
     };
 
     const updated = [...products, newProduct];
-    localStorage.setItem("products", JSON.stringify(updated));
+    saveLocalProducts(updated);
 
     return newProduct;
   },
 
-  async update(product: Product): Promise<Product> {
-    const products = JSON.parse(localStorage.getItem("products") || "[]");
+  update(updatedProduct: Product): Product {
+    const products = getLocalProducts();
 
-    const updated = products.map((p: Product) =>
-      p.id === product.id ? product : p
+    const updated = products.map((p) =>
+      p.id === updatedProduct.id ? updatedProduct : p
     );
 
-    localStorage.setItem("products", JSON.stringify(updated));
+    saveLocalProducts(updated);
 
-    return product;
+    return updatedProduct;
   },
 
-  async delete(id: number): Promise<void> {
-    const products = JSON.parse(localStorage.getItem("products") || "[]");
+  delete(id: number) {
+    const products = getLocalProducts();
 
-    const updated = products.filter((p: Product) => p.id !== id);
+    const updated = products.filter((p) => p.id !== id);
 
-    localStorage.setItem("products", JSON.stringify(updated));
+    saveLocalProducts(updated);
   },
 };

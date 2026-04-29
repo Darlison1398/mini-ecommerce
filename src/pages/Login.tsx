@@ -70,15 +70,12 @@ export const Login = () => {
                     Entrar
                 </button>
 
-                <p className="text-xs text-gray-500 mt-4 text-center">
+                {/*<p className="text-xs text-gray-500 mt-4 text-center">
                     Use: <br />
                     admin → mor_2314 / 83r5^_ <br />
                     cliente → kevinryan / kev02937@
-                </p>
+                </p>*/}
             </form>
         </div>
     );
-
-
-
 };
